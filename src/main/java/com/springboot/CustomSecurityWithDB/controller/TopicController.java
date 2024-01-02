@@ -42,9 +42,7 @@ public class TopicController {
 	}
 	
 	@PostMapping("/topic")
-	public ResponseEntity<String> addTopic(
-			@RequestBody Topic topic,
-			UriComponentsBuilder builder) {
+	public ResponseEntity<String> addTopic(@RequestBody Topic topic, UriComponentsBuilder builder) {
 		
 		
        Topic topicNew = topicService.addTopic(topic);
