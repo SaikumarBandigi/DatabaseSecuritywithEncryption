@@ -14,40 +14,39 @@ import com.springboot.CustomSecurityWithDB.service.impl.UserDetailsServiceImpl;
 
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class TopicSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	private UserDetailsServiceImpl userDetailsServiceImpl;	
-	
-	@Autowired
-	private TopicAuthenticationEntryPoint topicAuthenticationEntryPoint;
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-		    .authorizeRequests()
-		  	.antMatchers("/user/**").hasAnyRole("ADMIN","USER")
-			.and().httpBasic().realmName("Topic security application Realm")
-			.authenticationEntryPoint(topicAuthenticationEntryPoint);
-	
 
-	    
-	
-	} 
-	
-	/*
-	 * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)
-	 * throws Exception { BCryptPasswordEncoder bCryptPasswordEncoder = new
-	 * BCryptPasswordEncoder();
-	 * auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(
-	 * bCryptPasswordEncoder); }
-	 */
-	
-	  @Autowired
-		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	    	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-	       auth.userDetailsService(userDetailsServiceImpl).
-	       passwordEncoder(bCryptPasswordEncoder);
-		}
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    private TopicAuthenticationEntryPoint topicAuthenticationEntryPoint;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .and().httpBasic().
+                realmName("Topic security application Realm")
+                .authenticationEntryPoint(topicAuthenticationEntryPoint);
+
+
+    }
+
+    /*
+     * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)
+     * throws Exception { BCryptPasswordEncoder bCryptPasswordEncoder = new
+     * BCryptPasswordEncoder();
+     * auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(
+     * bCryptPasswordEncoder); }
+     */
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        auth.userDetailsService(userDetailsServiceImpl).
+                passwordEncoder(bCryptPasswordEncoder);
+    }
 }

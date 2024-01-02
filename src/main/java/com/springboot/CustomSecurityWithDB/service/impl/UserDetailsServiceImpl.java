@@ -27,10 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserInfo userInfo = userInfoDAO.getActiveUser(userName);
 		GrantedAuthority authority = new SimpleGrantedAuthority(userInfo.getRole());
 		
-		User user = new User(userInfo.getUserName(),
-				userInfo.getPassword(),Arrays.asList(authority));
+		User user = new User(userInfo.getUserName(), userInfo.getPassword(),Arrays.asList(authority));
 		
-		UserDetails userDetails = (UserDetails)user; 
+		UserDetails userDetails = (UserDetails)user;
 		return userDetails;
 	}
 }
